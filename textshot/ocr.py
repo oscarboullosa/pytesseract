@@ -2,12 +2,13 @@ import pytesseract
 from PIL import Image
 import sys
 import io
-from .logger import log_ocr_error, print_error
-from .notifications import notify
+from logger import log_ocr_error, print_error
+from notifications import notify
 from PyQt5 import QtCore
-from .messages import ocr_error_message
+from messages import ocr_error_message
 
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract'
+
 def ensure_tesseract_installed():
     try:
         pytesseract.get_tesseract_version()
@@ -36,3 +37,19 @@ def get_ocr_result(img, lang=None):
         log_ocr_error(error)
         notify(ocr_error_message(error))
         return
+
+"""
+Se crea un objeto QBuffer de Qt para almacenar datos en memoria.
+La imagen img se guarda en este búfer en formato PNG.
+
+Se crea una imagen de tipo Image utilizando la biblioteca PIL a partir de los datos almacenados en el búfer.
+
+Se utiliza la biblioteca pytesseract para realizar OCR en la imagen convertida.
+pytesseract.image_to_string toma la imagen PIL (pil_img) y devuelve el texto extraído de la imagen.
+Se ha especificado un tiempo de espera (timeout=5) para evitar bloqueos prolongados en caso de problemas.
+Si se produce un error durante el proceso OCR, se captura la excepción RuntimeError.
+Se llama a las funciones log_ocr_error y notify para registrar el error y notificarlo de alguna manera.
+Si ocurre un error, la función devuelve None.
+
+Esta función toma una imagen como entrada, realiza OCR en ella utilizando Tesseract a través de la biblioteca pytesseract, y devuelve el texto extraído. Si se encuentra algún error durante el proceso, se registra y notifica, y la función devuelve None.
+"""

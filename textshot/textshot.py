@@ -8,9 +8,9 @@ import pyperclip
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt, QTimer
 
-from .logger import log_copied, log_ocr_failure
-from .notifications import notify_copied, notify_ocr_failure
-from .ocr import ensure_tesseract_installed, get_ocr_result
+from logger import log_copied, log_ocr_failure
+from notifications import notify_copied, notify_ocr_failure
+from ocr import ensure_tesseract_installed, get_ocr_result
 
 
 class Snipper(QtWidgets.QWidget):
